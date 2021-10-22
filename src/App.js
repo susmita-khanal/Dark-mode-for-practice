@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import react, { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
+  const getTheme = () => {
+    return JSON.parse(localStorage.getItem("darkMode"));
+  };
+  const [darkMode, setDarkMode] = useState(getTheme());
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className={darkMode ? "container" : ""}>
+        <div className="theme-box">
+          <h1 className="Dark-box">Dark Mode is On</h1>
+          <input
+            className="check-field"
+            type="checkbox"
+            onChange={() => setDarkMode(!darkMode)}
+            checked={darkMode ? "true" : ""}
+          />
+        </div>
+      </div>
+    </>
   );
 }
 
